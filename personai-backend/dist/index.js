@@ -50,21 +50,20 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 const env_config_1 = __importDefault(require("./env.config"));
+const user_route_1 = require("./routes/user.route");
 const app = (0, express_1.default)();
-app.post("/api/v1/signup", (req, res) => {
-});
-app.post("/api/v1/login", (req, res) => {
-});
-app.post("/api/v1/content", (req, res) => {
-});
-app.get("/api/v1/content", (req, res) => {
-});
-app.delete("/api/v1/content", (req, res) => {
-});
-app.post("/api/v1/brain/share", (req, res) => {
-});
-app.get("/api/v1/brain/:shareLink", (req, res) => {
-});
+app.use(express_1.default.json());
+app.use('/api/v1/user', user_route_1.userRouter);
+// app.post("/api/v1/content", (req, res) => {
+// })
+// app.get("/api/v1/content", (req, res) => {
+// })
+// app.delete("/api/v1/content", (req, res) => {
+// })
+// app.post("/api/v1/brain/share", (req, res) => {
+// })
+// app.get("/api/v1/brain/:shareLink", (req, res) => {
+// })
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         yield mongoose_1.default.connect(env_config_1.default.DatabaseConnectionString);

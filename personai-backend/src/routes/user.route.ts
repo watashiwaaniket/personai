@@ -6,7 +6,8 @@ import { userModel } from '../db';
 import envConfig from "../env.config";
 
 userRouter.post('/signup', async function (req, res) {
-    const {email, password} = req.body;
+    const email = req.body.email;
+    const password = req.body.password;
     const hashedPassword  = bcrypt.hashSync(password, 5);
 
     await userModel.create({
