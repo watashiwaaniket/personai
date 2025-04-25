@@ -33,13 +33,29 @@ app.post("/api/v1/content", userMiddleware, async (req, res) => {
     })
 })
 
-app.get("/api/v1/content", (req, res) => {
-    
+app.get("/api/v1/content", userMiddleware, async (req, res) => {
+    const userId = req.userId;
+    const content = await contentModel.find({
+        userId: userId
+    }).populate("userId", "username")
+    res.json({
+        content
+    })
 })
 
-// app.delete("/api/v1/content", (req, res) => {
+app.delete("/api/v1/content", userMiddleware, async (req, res) => {
+    const userId = req.userId;
+    const _id = req.body._id;
 
-// })
+    await contentModel.deleteMany({
+        _id,
+        userId
+    })
+
+    res.json({
+        message: "Content Deleted!" 
+    })
+})
 
 // app.post("/api/v1/brain/share", (req, res) => {
 

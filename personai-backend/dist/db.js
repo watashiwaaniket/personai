@@ -38,6 +38,7 @@ const mongoose_1 = __importStar(require("mongoose"));
 const ObjectId = mongoose_1.default.Types.ObjectId;
 const contentTypes = ['image', 'video', 'article', 'audio'];
 const userSchema = new mongoose_1.Schema({
+    username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
 });

@@ -8,11 +8,13 @@ import envConfig from "../env.config";
 //TODO - setup zod validation and try catch blocks so that the server dont break
 
 userRouter.post('/signup', async function (req, res) {
+    const username = req.body.username;
     const email = req.body.email;
     const password = req.body.password;
     const hashedPassword  = bcrypt.hashSync(password, 5);
 
     await userModel.create({
+        username: username,
         email: email,
         password: hashedPassword
     });

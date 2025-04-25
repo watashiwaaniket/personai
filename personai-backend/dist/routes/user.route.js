@@ -56,10 +56,12 @@ const env_config_1 = __importDefault(require("../env.config"));
 //TODO - setup zod validation and try catch blocks so that the server dont break
 userRouter.post('/signup', function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
+        const username = req.body.username;
         const email = req.body.email;
         const password = req.body.password;
         const hashedPassword = bcrypt.hashSync(password, 5);
         yield db_1.userModel.create({
+            username: username,
             email: email,
             password: hashedPassword
         });

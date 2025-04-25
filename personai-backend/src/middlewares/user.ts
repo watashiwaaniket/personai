@@ -9,8 +9,7 @@ const userMiddleware: RequestHandler = (req, res, next) => {
     if(typeof token !== 'string'){
         return res.status(403).json({
             message: 'You are not signed in!'
-        })
-        
+        })        
     }
 
     try {
