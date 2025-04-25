@@ -5,6 +5,8 @@ import * as bcrypt from 'bcrypt';
 import { userModel } from '../db';
 import envConfig from "../env.config";
 
+//TODO - setup zod validation and try catch blocks so that the server dont break
+
 userRouter.post('/signup', async function (req, res) {
     const email = req.body.email;
     const password = req.body.password;

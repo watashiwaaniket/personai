@@ -48,12 +48,12 @@ const contentSchema = new mongoose_1.Schema({
     link: { type: String, required: true },
     type: { type: String, enum: contentTypes, required: true },
     title: { type: String, required: true },
-    tags: [{ type: ObjectId, ref: 'Tag' }],
-    userId: { type: ObjectId, ref: 'User', required: true },
+    tags: [{ type: ObjectId, ref: 'tag' }],
+    userId: { type: ObjectId, ref: 'user', required: true },
 });
 const linkSchema = new mongoose_1.Schema({
     hash: { type: String, required: true },
-    userId: { type: ObjectId, ref: 'User', required: true },
+    userId: { type: ObjectId, ref: 'user', required: true },
 });
 const userModel = mongoose_1.default.model('user', userSchema);
 exports.userModel = userModel;

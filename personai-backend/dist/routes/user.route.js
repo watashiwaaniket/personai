@@ -53,6 +53,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bcrypt = __importStar(require("bcrypt"));
 const db_1 = require("../db");
 const env_config_1 = __importDefault(require("../env.config"));
+//TODO - setup zod validation and try catch blocks so that the server dont break
 userRouter.post('/signup', function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const email = req.body.email;
