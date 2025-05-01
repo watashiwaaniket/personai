@@ -1,6 +1,7 @@
 import './App.css'
 import { Button } from './components/Button'
 import { PlusIcon } from './icons/PlusIcon'
+import { ShareIcon } from './icons/ShareIcon'
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
         this better work nicely
       ```
     </code><br />
-    <Button variant='secondary' size='sm' onClick={() => {}} text={'Start Here'} startIcon={<PlusIcon size='md'/>}/>
+    <Button variant='primary' size='md' onClick={() => {alert('hi there')}} text={'Share'} startIcon={<ShareIcon size='md'/>}/>
+    <Button variant='secondary' size='md' onClick={() => {alert('second button')}} text='Secondary' endIcon={<PlusIcon size='md'/>}/>
     </>
   )
 }
