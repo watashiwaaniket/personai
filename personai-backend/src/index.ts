@@ -5,7 +5,8 @@ dotenv.config();
 import envConfig from "./env.config";
 import { userRouter } from "./routes/user.route";
 import { userMiddleware } from "./middlewares/user";
-import { contentModel } from "./db";
+import { contentModel, linkModel, userModel } from "./db";
+import { random } from "./utils";
 
 declare module 'express-serve-static-core'{
     interface Request{
@@ -57,13 +58,73 @@ app.delete("/api/v1/content", userMiddleware, async (req, res) => {
     })
 })
 
-// app.post("/api/v1/brain/share", (req, res) => {
+app.post("/api/v1/brain/share", userMiddleware, async (req, res) => {
+    const share = req.body.share;
+    if(share){
+        const existingLink = await linkModel.findOne({
+            userId : req.userId
+        })
 
-// })
+        if(existingLink){
+            res.json({
+                hash: existingLink.hash
+            })
+            return
+        }
+        const hash = random(10);
+        await linkModel.create({
+            userId: req.userId,
+            hash: hash
+        })
 
-// app.get("/api/v1/brain/:shareLink", (req, res) => {
+        res.json({
+            hash
+        })
+    } else {
+        await linkModel.deleteOne({
+            userId: req.userId
+        })
+        res.json({
+            message: 'Removed Link'
+        })
+    }
+})
 
-// })
+app.get("/api/v1/brain/:shareLink", async (req, res) => {
+    const hash = req.params.shareLink;
+
+    const link = await linkModel.findOne({
+        hash
+    });
+
+    if (!link) {
+        res.status(411).json({
+            message: "Sorry incorrect input"
+        })
+        return;
+    }
+    // userId
+    const content = await contentModel.find({
+        userId: link.userId
+    })
+
+    console.log(link);
+    const user = await userModel.findOne({
+        _id: link.userId
+    })
+
+    if (!user) {
+        res.status(411).json({
+            message: "user not found, error should ideally not happen"
+        })
+        return;
+    }
+
+    res.json({
+        username: user.username,
+        content: content
+    })
+})
 
 async function main() {
     await mongoose.connect(envConfig.DatabaseConnectionString);
