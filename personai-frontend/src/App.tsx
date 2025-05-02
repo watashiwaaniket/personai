@@ -16,7 +16,7 @@ function App() {
     </code><br />
     <Button variant='primary' size='md' onClick={() => {alert('hi there')}} text={'Share Brain'} startIcon={<ShareIcon size='md'/>}/>
     <Button variant='secondary' size='md' onClick={() => {alert('second button')}} text='Add Content' startIcon={<PlusIcon size='lg'/>}/>
-    <Card />
+    <Card tags={['#productivity', '#trending']} shareHandler={() => {alert('share')}} deleteHandler={() => {alert('delete')}} dateAdded='12-03-2001'/>
     </>
   )
 }
