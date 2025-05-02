@@ -12,7 +12,7 @@ export interface ButtonProps {
 export const Button = ( props : ButtonProps ) => {
     return (
     <button className={`
-        p-2 px-6 min-w-28 rounded-xl font-semibold m-2
+        p-2 px-6 min-w-28 rounded-xl font-medium m-2
         ${(props.variant == 'primary') ? 'bg-emerald-400 text-white' : 'bg-emerald-100 text-emerald-600'} 
         ${(props.size == "sm") && 'text-sm' || (props.size == "lg") &&'text-lg' || (props.size == "md") && 'text-md'}
         flex justify-center items-center
