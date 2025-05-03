@@ -5,19 +5,24 @@ import { ShareIcon } from './icons/ShareIcon'
 
 function App() {
   return (
-    <>
-    <div className='text-2xl text-green-400'>
-      personAI
+    <div className='h-screen bg-[#EFF5F5]'>
+      <div className='text-2xl text-green-400 p-4'>
+        personAI
+      </div>
+      <code className='p-4'>
+        ```
+          Your second brain utilizing the power of AI
+        ```
+      </code><br />
+      <div className='flex justify-end mr-8'>
+        <Button variant='primary' size='md' onClick={() => {alert('hi there')}} text={'Share Brain'} startIcon={<ShareIcon size='md'/>}/>
+        <Button variant='secondary' size='md' onClick={() => {alert('second button')}} text='Add Content' startIcon={<PlusIcon size='lg'/>}/>
+      </div>    
+      <div className='flex mt-6'>
+        <Card type='tweet' title='Build a twitter embed' link='1918541398980059344' tags={['#productivity', '#trending']} shareHandler={() => {alert('share')}} deleteHandler={() => {alert('delete')}} dateAdded='01-05-2025'/>
+        <Card type='youtube' title='A youtube embed' link='https://www.youtube.com/watch?v=ftYmXoH0V5I' tags={['#web-dev', '#educational']} shareHandler={() => {alert('share')}} deleteHandler={() => {alert('delete')}} dateAdded='01-05-2025'/>
+      </div>
     </div>
-    <code>
-      ```
-        this better work nicely
-      ```
-    </code><br />
-    <Button variant='primary' size='md' onClick={() => {alert('hi there')}} text={'Share Brain'} startIcon={<ShareIcon size='md'/>}/>
-    <Button variant='secondary' size='md' onClick={() => {alert('second button')}} text='Add Content' startIcon={<PlusIcon size='lg'/>}/>
-    <Card tags={['#productivity', '#trending']} shareHandler={() => {alert('share')}} deleteHandler={() => {alert('delete')}} dateAdded='12-03-2001'/>
-    </>
   )
 }
 
