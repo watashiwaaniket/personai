@@ -3,6 +3,10 @@ import { Card } from './components/Card'
 import { PlusIcon } from './icons/PlusIcon'
 import { ShareIcon } from './icons/ShareIcon'
 
+function showModal(){
+  alert('write modal logic here')
+}
+
 function App() {
   return (
     <div className='h-screen bg-[#EFF5F5]'>
@@ -16,7 +20,7 @@ function App() {
       </code><br />
       <div className='flex justify-end mr-8'>
         <Button variant='primary' size='md' onClick={() => {alert('hi there')}} text={'Share Brain'} startIcon={<ShareIcon size='md'/>}/>
-        <Button variant='secondary' size='md' onClick={() => {alert('second button')}} text='Add Content' startIcon={<PlusIcon size='lg'/>}/>
+        <Button variant='secondary' size='md' onClick={() => {showModal()}} text='Add Content' startIcon={<PlusIcon size='lg'/>}/>
       </div>    
       <div className='flex mt-6'>
         <Card type='tweet' title='Build a twitter embed' link='1918541398980059344' tags={['#productivity', '#trending']} shareHandler={() => {alert('share')}} deleteHandler={() => {alert('delete')}} dateAdded='01-05-2025'/>

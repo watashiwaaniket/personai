@@ -16,7 +16,7 @@ export interface CardButtonProps {
 export function Card(props: CardButtonProps) {
     return (
     <>
-        <div className="p-2 bg-white border shadow-sm rounded-lg max-w-80 h-96 m-4 flex flex-col">
+        <div className="p-2 bg-white border shadow-sm rounded-lg w-80 h-96 m-4 flex flex-col">
             <div className="flex justify-between w-full h-12 items-center">
                 <div className="flex items-center">
                     <PlusIcon size="md" color="text-slate-800"/>
