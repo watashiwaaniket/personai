@@ -1,5 +1,6 @@
 import { Button } from './components/Button'
 import { Card } from './components/Card'
+import { Modal } from './components/Modal'
 import { PlusIcon } from './icons/PlusIcon'
 import { ShareIcon } from './icons/ShareIcon'
 
@@ -10,6 +11,7 @@ function showModal(){
 function App() {
   return (
     <div className='h-screen bg-[#EFF5F5]'>
+      <Modal open={true} onClose={''}/>
       <div className='text-2xl text-green-400 p-4'>
         personAI
       </div>

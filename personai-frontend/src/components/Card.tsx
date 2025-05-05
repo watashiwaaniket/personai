@@ -27,7 +27,7 @@ export function Card(props: CardButtonProps) {
                     <button onClick={props.deleteHandler}><DeleteIcon size="md" color="text-slate-400"/></button>
                 </div>
             </div>
-            <div className="p-2 overflow-scroll" data-theme="light">
+            <div className="p-2 overflow-scroll z-0" data-theme="light">
                 {
                     (props.link) && (props.type == "tweet") && <Tweet id={props.link} />
                     ||
