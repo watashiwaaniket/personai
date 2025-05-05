@@ -19,7 +19,7 @@ export function Modal({open, onClose} : ModelProps){
             <div className="fixed z-50 w-screen h-screen flex justify-center items-center">
                 <div className="bg-white min-h-60 w-96 rounded-lg">
                     <div className="p-4 flex justify-end">
-                        <button>
+                        <button onClick={onClose}>
                             <CrossIcon size="lg" />
                         </button>                        
                     </div>

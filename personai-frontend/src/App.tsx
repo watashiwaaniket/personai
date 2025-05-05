@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Button } from './components/Button'
 import { Card } from './components/Card'
 import { Modal } from './components/Modal'
@@ -9,9 +10,13 @@ function showModal(){
 }
 
 function App() {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <div className='h-screen bg-[#EFF5F5]'>
-      <Modal open={true} onClose={''}/>
+      <Modal open={modalOpen} onClose={() => {
+        setModalOpen(false);
+      }}/>
       <div className='text-2xl text-green-400 p-4'>
         personAI
       </div>
@@ -22,7 +27,7 @@ function App() {
       </code><br />
       <div className='flex justify-end mr-8'>
         <Button variant='primary' size='md' onClick={() => {alert('hi there')}} text={'Share Brain'} startIcon={<ShareIcon size='md'/>}/>
-        <Button variant='secondary' size='md' onClick={() => {showModal()}} text='Add Content' startIcon={<PlusIcon size='lg'/>}/>
+        <Button variant='secondary' size='md' onClick={() => {setModalOpen(true)}} text='Add Content' startIcon={<PlusIcon size='lg'/>}/>
       </div>    
       <div className='flex mt-6'>
         <Card type='tweet' title='Build a twitter embed' link='1918541398980059344' tags={['#productivity', '#trending']} shareHandler={() => {alert('share')}} deleteHandler={() => {alert('delete')}} dateAdded='01-05-2025'/>
