@@ -2,8 +2,8 @@ import { CrossIcon } from "../icons/CrossIcon";
 import { Button } from "./Button";
 
 export interface ModelProps {
-    open: any;
-    onClose: any;
+    open: boolean;
+    onClose: () => void;
 }
 
 export interface InputProps {
@@ -15,7 +15,7 @@ export interface InputProps {
 export function Modal({open, onClose} : ModelProps){
     return (
         <div>
-            {open && <><div className="w-screen h-screen bg-slate-900 fixed top-0 left-0 z-40 opacity-40 flex justify-center items-center"></div>
+            {open && <><div className="w-screen h-screen bg-slate-900 fixed top-0 left-0 z-40 opacity-60 flex justify-center items-center"></div>
             <div className="fixed z-50 w-screen h-screen flex justify-center items-center">
                 <div className="bg-white min-h-60 w-96 rounded-lg">
                     <div className="p-4 flex justify-end">
@@ -42,7 +42,7 @@ function Input({ onChange, placeholder, inputType } : InputProps){
     return <>
         {
             (inputType == 'short') && <input placeholder={placeholder} type={"text"} className={inputStyle} onChange={onChange} /> ||
-            (inputType == 'long') && <textarea placeholder={placeholder} className={inputStyle + ' h-32'} />        
+            (inputType == 'long') && <textarea placeholder={placeholder} className={inputStyle + ' h-48'} onChange={onChange}/>        
         }
     </>
 }
