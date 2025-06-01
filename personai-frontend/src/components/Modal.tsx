@@ -9,7 +9,7 @@ export interface ModelProps {
 export interface InputProps {
     placeholder: string;
     inputType: 'short' | 'long';
-    onChange: () => void;
+    onChange?: () => void;
 }
 
 export function Modal({open, onClose} : ModelProps){

@@ -1,4 +1,7 @@
 import { PersonaIcon } from "../icons/PersonaIcon";
+import { XIcon } from "../icons/XIcon";
+import { YoutubeIcon } from "../icons/YoutubeIcon";
+import { SidebarItem } from "./SidebarItem";
 
 export function Sidebar() {
     return(
@@ -7,6 +10,8 @@ export function Sidebar() {
             <code className='px-6'>
                 Your second brain utilizing the power <br/>of AI
             </code>
+            <SidebarItem icon={<XIcon size="md"/>} text="Tweets"/>
+            <SidebarItem icon={<YoutubeIcon size="lg"/>} text="Youtube" />
         </div>
     )
-}
+} 

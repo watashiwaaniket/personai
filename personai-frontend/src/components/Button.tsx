@@ -6,7 +6,7 @@ export interface ButtonProps {
     text : string;
     startIcon ?: ReactElement;
     endIcon ?: ReactElement;
-    onClick : () => void;
+    onClick ?: () => void;
 }
 
 export const Button = ( props : ButtonProps ) => {
