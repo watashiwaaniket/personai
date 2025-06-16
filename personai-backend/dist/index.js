@@ -54,8 +54,10 @@ const user_route_1 = require("./routes/user.route");
 const user_1 = require("./middlewares/user");
 const db_1 = require("./db");
 const utils_1 = require("./utils");
+const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
+app.use((0, cors_1.default)());
 app.use('/api/v1/user', user_route_1.userRouter);
 app.post("/api/v1/content", user_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { link, type, title, tags } = req.body;

@@ -7,6 +7,7 @@ import { userRouter } from "./routes/user.route";
 import { userMiddleware } from "./middlewares/user";
 import { contentModel, linkModel, userModel } from "./db";
 import { random } from "./utils";
+import cors from "cors";
 
 declare module 'express-serve-static-core'{
     interface Request{
@@ -16,6 +17,7 @@ declare module 'express-serve-static-core'{
 
 const app = express();
 app.use(express.json())
+app.use(cors())
 
 app.use('/api/v1/user', userRouter);
 

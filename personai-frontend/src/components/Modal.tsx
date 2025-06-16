@@ -7,12 +7,6 @@ export interface ModelProps {
     onClose: () => void;
 }
 
-export interface InputProps {
-    placeholder: string;
-    inputType: 'short' | 'long';
-    onChange?: () => void;
-}
-
 export function Modal({open, onClose} : ModelProps){
     return (
         <div>
