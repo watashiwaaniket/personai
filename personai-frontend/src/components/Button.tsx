@@ -14,9 +14,9 @@ export interface ButtonProps {
 export const Button = ( props : ButtonProps ) => {
     return (
     <button className={`
-        p-2 px-6 min-w-28 rounded-xl font-medium m-2
+        font-medium m-2
         ${(props.variant == 'primary') ? 'bg-emerald-400 text-white' : 'bg-emerald-100 text-emerald-600'} 
-        ${(props.size == "sm") && 'text-sm' || (props.size == "lg") &&'text-lg' || (props.size == "md") && 'text-md'}
+        ${(props.size == "sm") && 'text-[12px] px-4 min-w-20 p-1 rounded-lg' || (props.size == "lg") &&'text-lg px-6 min-w-28 p-2 rounded-xl' || (props.size == "md") && 'text-md px-6 min-w-28 p-1 rounded-xl'}
         flex justify-center items-center ${props.fullWidth ? "w-full" : ""}
         ${props.loading ? "opacity-45" : ""}
     `}
