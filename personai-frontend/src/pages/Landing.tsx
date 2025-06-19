@@ -14,7 +14,6 @@ export function Landing(){
                     <Button variant="secondary" size="sm" text="Signup" onClick={() => navigate('/signup')}/>
                 </div>
             </div>
-            <div className="lg:px-[360px]">
             <div className="flex flex-col items-center justify-center mt-4 md:mt-12">
                 <img src="/hero-banner.png" alt="hero-banner" />
                 <h1 className="text-2xl md:text-3xl lg:text-7xl font-bold mt-2">Your Personal Second Brain</h1>
@@ -25,18 +24,27 @@ export function Landing(){
             <div className="flex items-center justify-center py-16">
                 <img src="/placeholder-banner2.png" alt="banner2" className="max-w-96 md:max-w-[780px] lg:max-w-[920px] rounded-xl border drop-shadow-md"/>
             </div>
-            <div className="px-8">
+            <div className="px-8 text-center">
                 <h1 className="text-xl md:text-2xl lg:text-4xl font-bold">A second brain like no other</h1>
-                <p className="mt-4 text-base lg:text-xl max-w-[640px] text-slate-700 font-medium">
-                    PersonAi makes it super easy to store your thoughts. Just copy the link of the content you want to store and the AI would summarize it for you along with past lookups for in-depth knowledge network.
+                <p className="mt-4 text-base lg:text-xl text-slate-700 font-medium">
+                    PersonAi makes it super easy to store your thoughts. Just copy the link of the content you want to store <br/> and the AI would summarize it for you along with past lookups for in-depth knowledge network.
                 </p>
-                <div>
-                    <div className="w-full h-80 border rounded-xl drop-shadow-lg my-8 bg-white">
+                <div className="flex flex-col items-center">
+                    <div className="w-full h-80 border rounded-xl drop-shadow-lg mt-8 bg-white lg:max-w-[920px]">
 
                     </div>
-                    <div>d</div>
+                    <div className="w-full grid grid-cols-3 lg:max-w-[920px]">
+                        <div className="mr-4 col-span-2 h-80 border rounded-xl drop-shadow-lg my-8 bg-white">
+
+                        </div>
+                        <div className="ml-4 h-80 border rounded-xl drop-shadow-lg my-8 bg-white">
+
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div className="text-center px-8 mt-8">
+                <h1 className="text-xl md:text-2xl lg:text-4xl font-bold">Questions & answers</h1>
             </div>
         </div>
     )
