@@ -24,15 +24,15 @@ export function HeroSection(){
                 <div className="flex flex-col items-center">
                     <div className="w-full h-80 border rounded-xl drop-shadow-lg mt-8 bg-white lg:max-w-[920px] p-8 overflow-hidden">
                         <h1 className="text-xl font-bold text-left">✨ Capture Anything, Instantly</h1>
-                        <p className="text-lg font-normal text-slate-600 text-left max-w-[520px] mt-4">Just start typing or drop a link — PersonAi transforms your notes, tweets, videos, and articles into clean, AI-powered summaries. No clutter, no distractions.</p>
-                        <img src="/features-bg-1.png" alt="noise" className="-mt-32"/>
+                        <p className="text-lg font-normal text-slate-600 text-left max-w-[520px] mt-4 z-10">Just start typing or drop a link — PersonAi transforms your notes, tweets, videos, and articles into clean, AI-powered summaries. No clutter, no distractions.</p>
+                        <img src="/features-bg-1.png" alt="noise" className="-mt-7 lg:-mt-32 z-0 opacity-75"/>
                     </div>
-                    <div className="w-full grid grid-cols-3 lg:max-w-[920px]">
-                        <div className="mr-4 col-span-2 h-80 border rounded-xl drop-shadow-lg my-8 bg-white p-8">
+                    <div className="w-full flex flex-col lg:grid lg:grid-cols-3 lg:max-w-[920px]">
+                        <div className="lg:mr-4 col-span-2 h-80 border rounded-xl drop-shadow-lg mt-8 lg:my-8 bg-white p-8">
                             <h1 className="text-xl font-bold text-left">🧠 AI That Thinks With You</h1>
                             <p className="text-lg font-normal text-slate-600 text-left max-w-[520px] mt-4">Let PersonAi do the heavy lifting. It reads your content, extracts key points, and helps you remember better — making your knowledge searchable, summarized, and smart.</p>
                         </div>
-                        <div className="ml-4 h-80 border rounded-xl drop-shadow-lg my-8 bg-white p-8">
+                        <div className="lg:ml-4 h-80 border rounded-xl drop-shadow-lg my-8 bg-white p-8">
                             <h1 className="text-xl font-bold text-left">🔒 Built for Privacy</h1>
                             <p className="text-lg font-normal text-slate-600 text-left max-w-[520px] mt-4">Your thoughts are yours. PersonAi is built with privacy in mind: encrypted storage, zero tracking, and no data sharing.</p>
                         </div>
