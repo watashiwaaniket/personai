@@ -4,6 +4,7 @@ import { Input } from "../components/Input";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { Link } from "react-router-dom";
+import { BackArrowIcon } from "../icons/BackArrowIcon";
 
 export function Signup(){
     const usernameRef = useRef<HTMLInputElement>(null)
@@ -25,6 +26,7 @@ export function Signup(){
     return(
         <div className="h-screen w-screen flex justify-center items-center" style={{backgroundImage: "URL('./signup-bg.jpg')", backgroundPosition:"center", backgroundSize:'cover'}}>
             <div className="bg-[linear-gradient(to_right,rgba(248,250,252,0.6),rgba(226,232,240,0.9))] flex flex-col rounded-xl border min-w-48 p-8">
+                <Link to={'/'} className="text-slate-700 font-bold -mt-6 -ml-6"><BackArrowIcon /></Link>
                 <Input placeholder="Username" inputType="short" ref={usernameRef}/>
                 <Input placeholder="Email" inputType="short" ref={emailRef} />
                 <Input placeholder="Password" inputType="password" ref={passwordRef}/>
