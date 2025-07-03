@@ -22,13 +22,14 @@ app.use(cors())
 app.use('/api/v1/user', userRouter);
 
 app.post("/api/v1/content", userMiddleware, async (req, res) => {
-    const { link, type, title, tags} = req.body;
+    const { link, type, title, tags, dateAdded} = req.body;
     await contentModel.create({
         link,
         type,
         title,
         userId: req.userId,
-        tags: []
+        tags: [],
+        dateAdded
     })
 
     res.json({

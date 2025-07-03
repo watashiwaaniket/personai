@@ -36,7 +36,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.linkModel = exports.contentModel = exports.tagModel = exports.userModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const ObjectId = mongoose_1.default.Types.ObjectId;
-const contentTypes = ['image', 'video', 'article', 'audio'];
+const contentTypes = ['image', 'video', 'article', 'audio', 'twitter', 'youtube'];
 const userSchema = new mongoose_1.Schema({
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
@@ -51,6 +51,7 @@ const contentSchema = new mongoose_1.Schema({
     title: { type: String, required: true },
     tags: [{ type: ObjectId, ref: 'tag' }],
     userId: { type: ObjectId, ref: 'user', required: true },
+    dateAdded: { type: String }
 });
 const linkSchema = new mongoose_1.Schema({
     hash: { type: String, required: true },

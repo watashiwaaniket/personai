@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 const ObjectId = mongoose.Types.ObjectId;
-const contentTypes = ['image', 'video', 'article', 'audio']; 
+const contentTypes = ['image', 'video', 'article', 'audio', 'twitter', 'youtube']; 
 
 const userSchema = new Schema({
     username: {type: String, required: true, unique: true},
@@ -19,6 +19,7 @@ const contentSchema = new Schema({
     title: { type: String, required: true },
     tags: [{ type: ObjectId, ref: 'tag' }],
     userId: { type: ObjectId, ref: 'user', required: true },
+    dateAdded: { type: String }
 })
 
 const linkSchema = new Schema({

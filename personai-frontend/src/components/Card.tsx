@@ -8,12 +8,24 @@ export interface CardButtonProps {
     dateAdded: string;
     link?: string;
     type: string;
-    tags: string[];
-    shareHandler: () => void;
-    deleteHandler: () => void;
+    tags?: string[];
+    shareHandler?: () => void;
+    deleteHandler?: () => void;
 }
 
+export function extractCodeFromUrl(url : string) {
+    const parts = url.split('/');
+    return parts[parts.length - 1] || parts[parts.length - 2];
+}
+    
+
 export function Card(props: CardButtonProps) {
+    if (!props.link) {
+        console.error("Link is undefined or empty.");
+        return;
+    }
+    const code = extractCodeFromUrl(props.link)
+
     return (
     <>
         <div className="p-2 bg-white border shadow-sm rounded-lg w-80 h-96 m-4 flex flex-col">
@@ -29,17 +41,14 @@ export function Card(props: CardButtonProps) {
             </div>
             <div className="p-2 overflow-scroll z-0" data-theme="light">
                 {
-                    (props.link) && (props.type == "tweet") && <Tweet id={props.link} />
+                    (props.link) && (props.type == "twitter") && <Tweet id={code} />
                     ||
                     (props.link) && (props.type == "youtube") &&
                     <iframe className="w-full rounded-md" src={props.link.replace("watch?v=", "embed/")} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
                 }
-                
-                
-
             </div>
             <div className="p-2 text-emerald-600 flex text-sm">
-                {props.tags.map((tag, idx) => (
+                {props.tags?.map((tag, idx) => (
                     <p key={idx} className="bg-emerald-100 px-2 rounded-xl mr-1">
                         {tag}
                     </p>

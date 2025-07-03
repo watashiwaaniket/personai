@@ -60,13 +60,14 @@ app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 app.use('/api/v1/user', user_route_1.userRouter);
 app.post("/api/v1/content", user_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { link, type, title, tags } = req.body;
+    const { link, type, title, tags, dateAdded } = req.body;
     yield db_1.contentModel.create({
         link,
         type,
         title,
         userId: req.userId,
-        tags: []
+        tags: [],
+        dateAdded
     });
     res.json({
         message: "Content added"
