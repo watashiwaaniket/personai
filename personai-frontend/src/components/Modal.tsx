@@ -43,6 +43,7 @@ export function Modal({open, onClose} : ModelProps){
                 "token" : localStorage.getItem("token")
             }
         })
+        onClose()
         
     }
 
