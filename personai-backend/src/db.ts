@@ -19,7 +19,8 @@ const contentSchema = new Schema({
     title: { type: String, required: true },
     tags: [{ type: ObjectId, ref: 'tag' }],
     userId: { type: ObjectId, ref: 'user', required: true },
-    dateAdded: { type: String }
+    dateAdded: { type: String },
+    context: { type: String, required: true}
 })
 
 const linkSchema = new Schema({

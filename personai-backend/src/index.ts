@@ -8,6 +8,7 @@ import { userMiddleware } from "./middlewares/user";
 import { contentModel, linkModel, userModel } from "./db";
 import { random } from "./utils";
 import cors from "cors";
+import { GoogleGenAI } from "@google/genai";
 
 declare module 'express-serve-static-core'{
     interface Request{
@@ -23,18 +24,43 @@ app.use('/api/v1/user', userRouter);
 
 app.post("/api/v1/content", userMiddleware, async (req, res) => {
     const { link, type, title, tags, dateAdded} = req.body;
-    await contentModel.create({
+    const ai = new GoogleGenAI({
+        apiKey: envConfig.GeminiApiKey
+    })
+
+    async function contextCall(link : string, type : string) {
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: `${type === 'youtube' ? `find out the transcript of the youtube video ${link}` :
+                type === 'twitter' ? '' :
+                type === 'note' ? `read through the note, and find suitable context for it, relevant information - ${link}` :
+                type === 'article' ? `look through the link given and find out the context of the article/blog and write it in less than 300words, clear and concise - ${link}` :
+                ''
+            }`
+        });
+        return response.text
+    }
+
+    try {
+        const context = await contextCall(link, type);
+
+        await contentModel.create({
         link,
         type,
         title,
         userId: req.userId,
-        tags: [],
-        dateAdded
-    })
+        tags,
+        dateAdded,
+        context
+        });
 
-    res.json({
+        res.json({
         message: "Content added"
-    })
+        });
+    } catch (err) {
+        console.error("Error while generating content context:", err);
+        res.status(500).json({ error: "Failed to add content" });
+    }
 })
 
 app.get("/api/v1/content", userMiddleware, async (req, res) => {

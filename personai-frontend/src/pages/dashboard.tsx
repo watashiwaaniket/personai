@@ -45,12 +45,13 @@ export function Dashboard() {
         <Button variant='secondary' size='md' onClick={() => {setModalOpen(true)}} text='Add Content' startIcon={<PlusIcon size='lg'/>}/>
       </div>    
       <div className='flex flex-wrap mt-6 z-0 justify-center sm:justify-normal'>
-        {contents.map(({_id, type, link, title, dateAdded}) => <Card 
+        {contents.map(({_id, type, link, title, dateAdded, context}) => <Card 
           key={_id}
           type={type}
           link={link}
           title={title}
           dateAdded={dateAdded}
+          context={context}
           shareHandler={() => {
             window.open(link, '_blank');
           }}

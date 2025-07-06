@@ -55,23 +55,48 @@ const user_1 = require("./middlewares/user");
 const db_1 = require("./db");
 const utils_1 = require("./utils");
 const cors_1 = __importDefault(require("cors"));
+const genai_1 = require("@google/genai");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 app.use('/api/v1/user', user_route_1.userRouter);
 app.post("/api/v1/content", user_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { link, type, title, tags, dateAdded } = req.body;
-    yield db_1.contentModel.create({
-        link,
-        type,
-        title,
-        userId: req.userId,
-        tags: [],
-        dateAdded
+    const ai = new genai_1.GoogleGenAI({
+        apiKey: env_config_1.default.GeminiApiKey
     });
-    res.json({
-        message: "Content added"
-    });
+    function contextCall(link, type) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield ai.models.generateContent({
+                model: 'gemini-2.5-flash',
+                contents: `${type === 'youtube' ? `find out the transcript of the youtube video ${link}` :
+                    type === 'twitter' ? '' :
+                        type === 'note' ? `read through the note, and find suitable context for it, relevant information - ${link}` :
+                            type === 'article' ? `look through the link given and find out the context of the article/blog and write it in less than 300words, clear and concise - ${link}` :
+                                ''}`
+            });
+            return response.text;
+        });
+    }
+    try {
+        const context = yield contextCall(link, type);
+        yield db_1.contentModel.create({
+            link,
+            type,
+            title,
+            userId: req.userId,
+            tags,
+            dateAdded,
+            context
+        });
+        res.json({
+            message: "Content added"
+        });
+    }
+    catch (err) {
+        console.error("Error while generating content context:", err);
+        res.status(500).json({ error: "Failed to add content" });
+    }
 }));
 app.get("/api/v1/content", user_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.userId;
