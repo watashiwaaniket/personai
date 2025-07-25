@@ -32,15 +32,6 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -54,40 +45,36 @@ const bcrypt = __importStar(require("bcrypt"));
 const db_1 = require("../db");
 const env_config_1 = __importDefault(require("../env.config"));
 //TODO - setup zod validation and try catch blocks so that the server dont break
-userRouter.post('/signup', function (req, res) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const username = req.body.username;
-        const email = req.body.email;
-        const password = req.body.password;
-        const hashedPassword = bcrypt.hashSync(password, 5);
-        yield db_1.userModel.create({
-            username: username,
-            email: email,
-            password: hashedPassword
-        });
-        res.json({
-            message: "You are signed up!"
-        });
+userRouter.post('/signup', async function (req, res) {
+    const username = req.body.username;
+    const email = req.body.email;
+    const password = req.body.password;
+    const hashedPassword = bcrypt.hashSync(password, 5);
+    await db_1.userModel.create({
+        username: username,
+        email: email,
+        password: hashedPassword
+    });
+    res.json({
+        message: "You are signed up!"
     });
 });
-userRouter.post('/login', function (req, res) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const { email, password } = req.body;
-        const response = yield db_1.userModel.findOne({
-            email
-        });
-        if ((response === null || response === void 0 ? void 0 : response.password) && bcrypt.compareSync(password, response === null || response === void 0 ? void 0 : response.password.toString())) {
-            const token = jsonwebtoken_1.default.sign({
-                id: response._id.toString()
-            }, env_config_1.default.JwtUserPassword);
-            res.json({
-                token
-            });
-        }
-        else {
-            res.status(403).json({
-                message: "Incorrect Creds"
-            });
-        }
+userRouter.post('/login', async function (req, res) {
+    const { email, password } = req.body;
+    const response = await db_1.userModel.findOne({
+        email
     });
+    if (response?.password && bcrypt.compareSync(password, response?.password.toString())) {
+        const token = jsonwebtoken_1.default.sign({
+            id: response._id.toString()
+        }, env_config_1.default.JwtUserPassword);
+        res.json({
+            token
+        });
+    }
+    else {
+        res.status(403).json({
+            message: "Incorrect Creds"
+        });
+    }
 });
