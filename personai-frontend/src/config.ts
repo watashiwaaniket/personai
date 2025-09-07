@@ -1,1 +1,1 @@
-export const BACKEND_URL = "https://personai-6175.vercel.app/"
+export const BACKEND_URL = "https://personai-6175.vercel.app"
