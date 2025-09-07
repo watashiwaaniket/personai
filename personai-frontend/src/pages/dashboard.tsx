@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Button } from '../components/Button'
 import { Card } from '../components/Card'
 import { Modal } from '../components/Modal'
+import { ContextModal } from '../components/ContextModal'
 import { PlusIcon } from '../icons/PlusIcon'
 import { ShareIcon } from '../icons/ShareIcon'
 import { Sidebar } from '../components/Sidebar'
@@ -12,8 +13,20 @@ import { MessageModal } from '../components/section/MessageModal'
 import { useMessageModal } from '../hooks/useMessageModal'
 
 
+interface Content {
+  _id: string;
+  type: string;
+  link: string;
+  title: string;
+  dateAdded: string;
+  context: string;
+  tags?: string[];
+}
+
 export function Dashboard() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [contextModalOpen, setContextModalOpen] = useState(false);
+  const [selectedContent, setSelectedContent] = useState<Content | null>(null);
   const {contents, refresh} = useContent();
   const {messageModalOpen,trigger} = useMessageModal();
 
@@ -28,6 +41,38 @@ export function Dashboard() {
     <Modal open={modalOpen} onClose={() => {
         setModalOpen(false);
       }}/>
+    {selectedContent && (
+      <ContextModal 
+        open={contextModalOpen}
+        onClose={() => {
+          setContextModalOpen(false);
+          setSelectedContent(null);
+        }}
+        context={selectedContent.context}
+        title={selectedContent.title}
+        link={selectedContent.link}
+        type={selectedContent.type}
+        dateAdded={selectedContent.dateAdded}
+        tags={selectedContent.tags}
+        shareHandler={() => {
+          window.open(selectedContent.link, '_blank');
+        }}
+        deleteHandler={async () => {
+          await axios.delete(`${BACKEND_URL}/api/v1/content`, {
+            headers: {
+              "token" : localStorage.getItem("token")
+            },
+            data:{
+              _id: selectedContent._id
+            }
+          })
+          refresh()
+          trigger()
+          setContextModalOpen(false);
+          setSelectedContent(null);
+        }}
+      />
+    )}
     <div className='p-4 min-h-screen sm:pl-64 z-0'>
       
       <div className='flex justify-center sm:justify-end sm:mr-8'>
@@ -45,15 +90,16 @@ export function Dashboard() {
         <Button variant='secondary' size='md' onClick={() => {setModalOpen(true)}} text='Add Content' startIcon={<PlusIcon size='lg'/>}/>
       </div>    
       <div className='flex flex-wrap mt-6 z-0 justify-center sm:justify-normal'>
-        {contents.map(({_id, type, link, title, dateAdded, context}) => <Card 
-          key={_id}
-          type={type}
-          link={link}
-          title={title}
-          dateAdded={dateAdded}
-          context={context}
+        {contents.map((content) => <Card 
+          key={content._id}
+          type={content.type}
+          link={content.link}
+          title={content.title}
+          dateAdded={content.dateAdded}
+          context={content.context}
+          tags={content.tags}
           shareHandler={() => {
-            window.open(link, '_blank');
+            window.open(content.link, '_blank');
           }}
           deleteHandler={async () => {
             await axios.delete(`${BACKEND_URL}/api/v1/content`, {
@@ -61,11 +107,15 @@ export function Dashboard() {
                 "token" : localStorage.getItem("token")
               },
               data:{
-                _id
+                _id: content._id
               }
             })
             refresh()
             trigger()
+          }}
+          onContextClick={() => {
+            setSelectedContent(content);
+            setContextModalOpen(true);
           }}
         />)}
       </div>

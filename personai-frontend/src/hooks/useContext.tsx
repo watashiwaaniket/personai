@@ -2,8 +2,18 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { BACKEND_URL } from "../config";
 
+interface Content {
+    _id: string;
+    type: string;
+    link: string;
+    title: string;
+    dateAdded: string;
+    context: string;
+    tags?: string[];
+}
+
 export function useContent() {
-    const [contents, setContents] = useState([]);
+    const [contents, setContents] = useState<Content[]>([]);
 
     function refresh(){
         axios.get(`${BACKEND_URL}/api/v1/content`, {

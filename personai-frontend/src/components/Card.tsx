@@ -3,8 +3,6 @@ import { PlusIcon } from "../icons/PlusIcon";
 import { ShareIcon } from "../icons/ShareIcon";
 import { Tweet } from 'react-tweet';
 import { Button } from "./Button";
-import { ContextModal } from "./ContextModal";
-import { useState } from "react";
 
 export interface CardButtonProps {
     title: string;
@@ -16,6 +14,7 @@ export interface CardButtonProps {
     deleteHandler?: () => void;
     contextHandler?: () => void;
     context: string;
+    onContextClick?: () => void;
 }
 
 
@@ -31,14 +30,8 @@ export function Card(props: CardButtonProps) {
         return;
     }
     const code = extractCodeFromUrl(props.link)
-    const [modalOpen, setModalOpen] = useState(false);
-
 
     return (
-    <>
-        <ContextModal context={props.context} open={modalOpen} onClose={() => {
-            setModalOpen(false)
-        }}/>
         <div className="bg-white border shadow-sm rounded-lg w-80 h-96 m-4">
             <div className="w-80 h-80 flex flex-col p-2">
                 <div className="flex justify-between w-full h-12 items-center">
@@ -72,9 +65,8 @@ export function Card(props: CardButtonProps) {
                 </div>
             </div>
             <div className="flex w-full justify-center items-center">
-                <Button text="get context" variant="secondary" size="sm" onClick={() => {setModalOpen(true)}}/>
+                <Button text="get context" variant="secondary" size="sm" onClick={props.onContextClick}/>
             </div>
         </div>
-    </>
     )
 }

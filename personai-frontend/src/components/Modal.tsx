@@ -13,6 +13,8 @@ export interface ModelProps {
 enum ContentType{
     Youtube = 'youtube',
     Twitter = 'twitter',
+    Note = 'note',
+    Article = 'article'
 }
 
 export function Modal({open, onClose} : ModelProps){
@@ -62,8 +64,14 @@ export function Modal({open, onClose} : ModelProps){
                         <Input ref={linkRef} placeholder="Link / Notes" inputType="long"/>
                         <p className="w-full px-14 pt-2 text-slate-500">Type:</p>
                         <div className="flex flex-row">
+                            <div>
                             <Button text="Youtube" size="md" variant={type === ContentType.Youtube ? "primary" : "secondary"} onClick={() => { setType(ContentType.Youtube) }}/>
                             <Button text="Twitter" size="md" variant={type === ContentType.Twitter ? "primary" : "secondary"} onClick={() => { setType(ContentType.Twitter) }}/>
+                            </div>
+                            <div>
+                            <Button text="Note" size="md" variant={type === ContentType.Note ? "primary" : "secondary"} onClick={() => { setType(ContentType.Note) }}/>
+                            <Button text="Article" size="md" variant={type === ContentType.Article ? "primary" : "secondary"} onClick={() => { setType(ContentType.Article) }}/>
+                            </div>
                         </div>
                         <Button onClick={addContent} text="Submit" variant="primary" size="md" />
                     </div>
