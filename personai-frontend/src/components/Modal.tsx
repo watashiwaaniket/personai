@@ -21,6 +21,7 @@ export function Modal({open, onClose} : ModelProps){
     const titleRef = useRef<HTMLInputElement>(null);
     const linkRef = useRef<HTMLInputElement>(null);
     const [type, setType] = useState(ContentType.Youtube);
+    const [loading, setLoading] = useState(false);
     const date = new Date()
     
     function today(){
@@ -33,20 +34,31 @@ export function Modal({open, onClose} : ModelProps){
     async function addContent(){
         const title = titleRef.current?.value ?? "";
         const link = linkRef.current?.value;
-        
 
-        await axios.post(`${BACKEND_URL}/api/v1/content`, {
-            link,
-            title,
-            type,
-            dateAdded : today()
-        }, {
-            headers: {
-                "token" : localStorage.getItem("token")
-            }
-        })
-        onClose()
-        
+        if (!title || !link) {
+            alert("Please fill in all fields");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            await axios.post(`${BACKEND_URL}/api/v1/content`, {
+                link,
+                title,
+                type,
+                dateAdded : today()
+            }, {
+                headers: {
+                    "token" : localStorage.getItem("token")
+                }
+            })
+            onClose()
+        } catch (error: any) {
+            console.error("Error adding content:", error);
+            alert("Failed to add content. Please try again.");
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
@@ -55,7 +67,7 @@ export function Modal({open, onClose} : ModelProps){
             <div className="fixed z-50 w-screen h-screen flex justify-center items-center">
                 <div className="bg-white min-h-60 w-96 rounded-lg">
                     <div className="p-4 flex justify-end">
-                        <button onClick={onClose}>
+                        <button onClick={onClose} disabled={loading}>
                             <CrossIcon size="lg" />
                         </button>                        
                     </div>
@@ -65,15 +77,45 @@ export function Modal({open, onClose} : ModelProps){
                         <p className="w-full px-14 pt-2 text-slate-500">Type:</p>
                         <div className="flex flex-row">
                             <div>
-                            <Button text="Youtube" size="md" variant={type === ContentType.Youtube ? "primary" : "secondary"} onClick={() => { setType(ContentType.Youtube) }}/>
-                            <Button text="Twitter" size="md" variant={type === ContentType.Twitter ? "primary" : "secondary"} onClick={() => { setType(ContentType.Twitter) }}/>
+                            <Button 
+                                text="Youtube" 
+                                size="md" 
+                                variant={type === ContentType.Youtube ? "primary" : "secondary"} 
+                                onClick={() => { setType(ContentType.Youtube) }}
+                                loading={loading}
+                            />
+                            <Button 
+                                text="Twitter" 
+                                size="md" 
+                                variant={type === ContentType.Twitter ? "primary" : "secondary"} 
+                                onClick={() => { setType(ContentType.Twitter) }}
+                                loading={loading}
+                            />
                             </div>
                             <div>
-                            <Button text="Note" size="md" variant={type === ContentType.Note ? "primary" : "secondary"} onClick={() => { setType(ContentType.Note) }}/>
-                            <Button text="Article" size="md" variant={type === ContentType.Article ? "primary" : "secondary"} onClick={() => { setType(ContentType.Article) }}/>
+                            <Button 
+                                text="Note" 
+                                size="md" 
+                                variant={type === ContentType.Note ? "primary" : "secondary"} 
+                                onClick={() => { setType(ContentType.Note) }}
+                                loading={loading}
+                            />
+                            <Button 
+                                text="Article" 
+                                size="md" 
+                                variant={type === ContentType.Article ? "primary" : "secondary"} 
+                                onClick={() => { setType(ContentType.Article) }}
+                                loading={loading}
+                            />
                             </div>
                         </div>
-                        <Button onClick={addContent} text="Submit" variant="primary" size="md" />
+                        <Button 
+                            onClick={addContent} 
+                            text={loading ? "Adding..." : "Submit"} 
+                            variant="primary" 
+                            size="md" 
+                            loading={loading}
+                        />
                     </div>
                 </div>
             </div>
