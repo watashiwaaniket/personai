@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 const ObjectId = mongoose.Types.ObjectId;
-const contentTypes = ['image', 'video', 'article', 'audio', 'twitter', 'youtube']; 
+const contentTypes = ['image', 'video', 'article', 'audio', 'twitter', 'youtube', 'note']; 
 
 const userSchema = new Schema({
     username: {type: String, required: true, unique: true},
