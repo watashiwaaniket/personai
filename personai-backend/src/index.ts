@@ -18,60 +18,7 @@ declare module 'express-serve-static-core'{
 
 const app = express();
 app.use(express.json())
-
-// CORS configuration
-const corsOptions = {
-  origin: function (origin: string | undefined, callback: Function) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    
-    const allowedOrigins = [
-      'http://localhost:5173', // Vite dev server
-      'http://localhost:3000', // Alternative dev port
-      'http://127.0.0.1:5173', // Alternative localhost
-      'http://127.0.0.1:3000', // Alternative localhost
-    ];
-    
-    // Allow any Vercel app domain
-    if (origin.includes('vercel.app') || origin.includes('localhost') || origin.includes('127.0.0.1')) {
-      return callback(null, true);
-    }
-    
-    // Check if origin is in allowed list
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      console.log('CORS blocked origin:', origin);
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'token', 'x-requested-with'],
-  exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar'],
-  optionsSuccessStatus: 200,
-  preflightContinue: false
-};
-
-app.use(cors(corsOptions));
-
-// Handle preflight requests explicitly
-app.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, token, x-requested-with');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.status(200).end();
-});
-
-// Health check endpoint
-app.get('/health', (req, res) => {
-  res.json({ 
-    status: 'OK', 
-    timestamp: new Date().toISOString(),
-    cors: 'enabled'
-  });
-});
+app.use(cors())
 
 app.use('/api/v1/user', userRouter);
 
